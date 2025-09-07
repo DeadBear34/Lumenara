@@ -1,3 +1,7 @@
 {
+  "item.lumenara.adamantium_ingot" :"Adamantium Ingot",
+  "item.lumenara.raw_adamantium" :"Raw Adamantium",
+  "item.lumenara.adamantium_nugget" :"Adamantium Nugget",
 
+  "block.lumenara.adamantium_block" : "Block of Adamantium"
 }
