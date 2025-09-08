@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "adamantium_ingot",
+  "ingredient": {
+    "item": "lumenara:adamantium_ore"
+  },
+  "result": {
+    "id": "lumenara:adamantium_ingot"
+  }
+}

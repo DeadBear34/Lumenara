@@ -1,0 +1,8 @@
+{
+  "replace" : false,
+  "values" : [
+    "lumenara:adamantium_block",
+    "lumenara:adamantium_ore",
+    "lumenara:deepslate_adamantium_ore"
+  ]
+}
