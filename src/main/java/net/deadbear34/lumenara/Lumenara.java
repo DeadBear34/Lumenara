@@ -59,6 +59,8 @@ public class Lumenara {
 
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(ModBlocks.ADAMANTIUM_BLOCK);
+            event.accept(ModBlocks.ADAMANTIUM_ORE);
+            event.accept(ModBlocks.DEEPSLATE_ADAMANTIUM_ORE);
         }
     }
 

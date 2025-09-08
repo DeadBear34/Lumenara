@@ -3,5 +3,7 @@
   "item.lumenara.raw_adamantium" :"Raw Adamantium",
   "item.lumenara.adamantium_nugget" :"Adamantium Nugget",
 
-  "block.lumenara.adamantium_block" : "Block of Adamantium"
+  "block.lumenara.adamantium_block" : "Block of Adamantium",
+  "block.lumenara.adamantium_ore" : "Adamantium Ore",
+  "block.lumenara.deepslate_adamantium_ore" : "Deepslate Adamantium Ore"
 }
