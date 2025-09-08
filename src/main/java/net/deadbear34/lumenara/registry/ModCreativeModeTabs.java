@@ -20,9 +20,16 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.RAW_ADAMANTIUM);
                         output.accept(ModItems.ADAMANTIUM_INGOT);
                         output.accept(ModItems.ADAMANTIUM_NUGGET);
+
                         output.accept(ModBlocks.ADAMANTIUM_ORE);
                         output.accept(ModBlocks.DEEPSLATE_ADAMANTIUM_ORE);
                         output.accept(ModBlocks.ADAMANTIUM_BLOCK);
+
+                        output.accept(ModItems.ADAMANTIUM_SWORD);
+                        output.accept(ModItems.ADAMANTIUM_SHOVEL);
+                        output.accept(ModItems.ADAMANTIUM_PICKAXE);
+                        output.accept(ModItems.ADAMANTIUM_AXE);
+                        output.accept(ModItems.ADAMANTIUM_HOE);
 
                     }).build());
 

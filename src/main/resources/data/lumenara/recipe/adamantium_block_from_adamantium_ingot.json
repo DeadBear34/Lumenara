@@ -4,7 +4,7 @@
   "group": "adamantium_block",
   "key": {
     "#": {
-      "id": "lumenara:adamantium_ingot"
+      "tag": "c:ingots/adamantium"
     }
   },
   "pattern": [

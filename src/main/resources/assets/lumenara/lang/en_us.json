@@ -2,6 +2,11 @@
   "item.lumenara.adamantium_ingot" :"Adamantium Ingot",
   "item.lumenara.raw_adamantium" :"Raw Adamantium",
   "item.lumenara.adamantium_nugget" :"Adamantium Nugget",
+  "item.lumenara.adamantium_sword" :"Adamantium Sword",
+  "item.lumenara.adamantium_shovel" :"Adamantium Shovel",
+  "item.lumenara.adamantium_axe" :"Adamantium Axe",
+  "item.lumenara.adamantium_pickaxe" :"Adamantium Pickaxe",
+  "item.lumenara.adamantium_hoe" :"Adamantium Hoe",
 
   "block.lumenara.adamantium_block" : "Block of Adamantium",
   "block.lumenara.adamantium_ore" : "Adamantium Ore",

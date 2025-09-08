@@ -4,7 +4,7 @@
   "group": "adamantium_ingot",
   "key": {
     "#": {
-      "item": "lumenara:adamantium_nugget"
+      "tag": "c:nuggets/adamantium"
     }
   },
   "pattern": [
