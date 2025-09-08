@@ -5,5 +5,7 @@
 
   "block.lumenara.adamantium_block" : "Block of Adamantium",
   "block.lumenara.adamantium_ore" : "Adamantium Ore",
-  "block.lumenara.deepslate_adamantium_ore" : "Deepslate Adamantium Ore"
+  "block.lumenara.deepslate_adamantium_ore" : "Deepslate Adamantium Ore",
+
+  "creativetab.lumenara.lumenara_creative_tab" : "Lumenara"
 }

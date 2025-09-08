@@ -2,6 +2,7 @@ package net.deadbear34.lumenara;
 
 
 import net.deadbear34.lumenara.registry.ModBlocks;
+import net.deadbear34.lumenara.registry.ModCreativeModeTabs;
 import net.deadbear34.lumenara.registry.ModItems;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -35,9 +36,12 @@ public class Lumenara {
         // Register ourselves for server and other game events we are interested in.
         NeoForge.EVENT_BUS.register(this);
 
+        ModCreativeModeTabs.register(modEventBus);
+
         //Registries
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
+
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -51,17 +55,7 @@ public class Lumenara {
     }
 
     private void addCreative(final BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.ADAMANTIUM_INGOT);
-            event.accept(ModItems.RAW_ADAMANTIUM);
-            event.accept(ModItems.ADAMANTIUM_NUGGET);
-        }
 
-        if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(ModBlocks.ADAMANTIUM_BLOCK);
-            event.accept(ModBlocks.ADAMANTIUM_ORE);
-            event.accept(ModBlocks.DEEPSLATE_ADAMANTIUM_ORE);
-        }
     }
 
     @SubscribeEvent
