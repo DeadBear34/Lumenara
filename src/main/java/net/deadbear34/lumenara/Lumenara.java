@@ -1,13 +1,20 @@
 package net.deadbear34.lumenara;
 
 
+import net.deadbear34.lumenara.particle.ModParticles;
+import net.deadbear34.lumenara.particle.RedFlameParticle;
+import net.deadbear34.lumenara.particle.TemplateParticles;
 import net.deadbear34.lumenara.registry.ModBlocks;
 import net.deadbear34.lumenara.registry.ModCreativeModeTabs;
 import net.deadbear34.lumenara.registry.ModItems;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
@@ -41,6 +48,7 @@ public class Lumenara {
         //Registries
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
+        ModParticles.register(modEventBus);
 
 
         // Register the item to a creative tab
@@ -64,7 +72,20 @@ public class Lumenara {
 
     }
 
-    private void onClientSetup(final FMLClientSetupEvent event) {
+    @EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
+    public static class ClientModEvents {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event) {
+            // Bisa dibiarkan kosong jika tidak ada yang perlu di-setup
+        }
 
+        @SubscribeEvent
+        public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
+            // Kode ini sekarang akan bekerja karena Tipe Partikel sudah benar
+            event.registerSpriteSet(ModParticles.TEMPLATE_PARTICLES.get(),
+                    (spriteSet) -> new TemplateParticles.Provider(spriteSet));
+
+            event.registerSpriteSet(ModParticles.RED_FLAME_PARTICLE.get(), RedFlameParticle.Provider::new);
+        }
     }
 }

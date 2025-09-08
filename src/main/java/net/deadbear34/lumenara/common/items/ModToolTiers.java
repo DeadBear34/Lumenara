@@ -9,6 +9,6 @@ import net.neoforged.neoforge.common.SimpleTier;
 
 public class ModToolTiers {
     public static final Tier ADAMANTIUM = new SimpleTier(ModTags.Blocks.INCORRECT_ADAMANTIUM_TOOL,
-            4000, 10f,4f, 15, () -> Ingredient.of(ModItems.ADAMANTIUM_INGOT));
+            4500, 10f,4f, 15, () -> Ingredient.of(ModItems.ADAMANTIUM_INGOT));
 
 }
