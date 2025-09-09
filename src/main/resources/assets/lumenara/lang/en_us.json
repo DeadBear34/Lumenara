@@ -11,6 +11,8 @@
   "block.lumenara.adamantium_block" : "Block of Adamantium",
   "block.lumenara.adamantium_ore" : "Adamantium Ore",
   "block.lumenara.deepslate_adamantium_ore" : "Deepslate Adamantium Ore",
+  "block.lumenara.explosive_barrel" : "Explosive Barrel",
+  "block.lumenara.explosive_barrel_primed" : "Explosive Barrel",
 
   "creativetab.lumenara.lumenara_creative_tab" : "Lumenara"
 }

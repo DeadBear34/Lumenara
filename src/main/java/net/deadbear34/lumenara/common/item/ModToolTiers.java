@@ -1,4 +1,4 @@
-package net.deadbear34.lumenara.common.items;
+package net.deadbear34.lumenara.common.item;
 
 import net.deadbear34.lumenara.registry.ModItems;
 import net.deadbear34.lumenara.util.ModTags;

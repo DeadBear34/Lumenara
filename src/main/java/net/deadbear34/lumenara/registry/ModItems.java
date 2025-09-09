@@ -1,7 +1,7 @@
 package net.deadbear34.lumenara.registry;
 
 import net.deadbear34.lumenara.Lumenara;
-import net.deadbear34.lumenara.common.items.ModToolTiers;
+import net.deadbear34.lumenara.common.item.ModToolTiers;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.RedStoneOreBlock;
 import net.neoforged.bus.api.IEventBus;

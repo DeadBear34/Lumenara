@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": {
+      "item": "minecraft:blaze_powder"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "X": {
+      "item": "minecraft:barrel"
+    }
+  },
+  "pattern": [
+    "BGB",
+    "GXG",
+    "BGB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "lumenara:explosive_barrel"
+  }
+}

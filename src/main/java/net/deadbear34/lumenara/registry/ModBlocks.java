@@ -1,6 +1,7 @@
 package net.deadbear34.lumenara.registry;
 
 import net.deadbear34.lumenara.Lumenara;
+import net.deadbear34.lumenara.common.block.ExplosiveBarrelBlock;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -29,10 +30,22 @@ public class ModBlocks {
             () -> new DropExperienceBlock(UniformInt.of(2,4),
                     BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.DEEPSLATE)));
 
+    // --- PENDAFTARAN BARU DI SINI ---
+    public static final DeferredBlock<Block> EXPLOSIVE_BARREL = registerBlock("explosive_barrel",
+            () -> new ExplosiveBarrelBlock(BlockBehaviour.Properties.of()
+                    .strength(2.5F).sound(SoundType.WOOD)));
+
+
+    // Metode helper untuk mendaftarkan blok DENGAN item
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
         return toReturn;
+    }
+
+
+    private static <T extends Block> DeferredBlock<T> registerBlockWithoutItem(String name, Supplier<T> block) {
+        return BLOCKS.register(name, block);
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block){

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "lumenara:block/explosive_barrel"
+    },
+    "lit=true": {
+      "model": "lumenara:block/explosive_barrel_primed"
+    }
+  }
+}

@@ -31,6 +31,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.ADAMANTIUM_AXE);
                         output.accept(ModItems.ADAMANTIUM_HOE);
 
+                        output.accept(ModBlocks.EXPLOSIVE_BARREL);
+
                     }).build());
 
     public static void register(IEventBus eventBus) {
