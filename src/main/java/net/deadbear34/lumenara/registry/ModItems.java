@@ -5,6 +5,7 @@ import net.deadbear34.lumenara.common.item.ModToolTiers;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.RedStoneOreBlock;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -39,6 +40,10 @@ public class ModItems {
     public static final DeferredItem<HoeItem> ADAMANTIUM_HOE = ITEMS.register("adamantium_hoe",
             () -> new HoeItem(ModToolTiers.ADAMANTIUM, new Item.Properties().fireResistant()
                     .attributes(HoeItem.createAttributes(ModToolTiers.ADAMANTIUM, -4,0.0F))));
+
+    public static final DeferredItem<Item> NAUTILUS_SPAWN_EGG = ITEMS.register("nautilus_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.NAUTILUS, 0xd4ccc3, 0xca7548,
+                    new Item.Properties()));
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);

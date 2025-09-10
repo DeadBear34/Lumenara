@@ -33,6 +33,8 @@ public class ModCreativeModeTabs {
 
                         output.accept(ModBlocks.EXPLOSIVE_BARREL);
 
+                        output.accept(ModItems.NAUTILUS_SPAWN_EGG);
+
                     }).build());
 
     public static void register(IEventBus eventBus) {

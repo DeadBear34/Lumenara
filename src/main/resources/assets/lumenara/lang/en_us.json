@@ -7,6 +7,7 @@
   "item.lumenara.adamantium_axe" :"Adamantium Axe",
   "item.lumenara.adamantium_pickaxe" :"Adamantium Pickaxe",
   "item.lumenara.adamantium_hoe" :"Adamantium Hoe",
+  "item.lumenara.nautilus_spawn_egg" :"Nautilus Spawn Egg",
 
   "block.lumenara.adamantium_block" : "Block of Adamantium",
   "block.lumenara.adamantium_ore" : "Adamantium Ore",
@@ -14,5 +15,8 @@
   "block.lumenara.explosive_barrel" : "Explosive Barrel",
   "block.lumenara.explosive_barrel_primed" : "Explosive Barrel",
 
-  "creativetab.lumenara.lumenara_creative_tab" : "Lumenara"
+  "creativetab.lumenara.lumenara_creative_tab" : "Lumenara",
+
+
+  "entity.lumenara.nautilus" :"Nautilus"
 }

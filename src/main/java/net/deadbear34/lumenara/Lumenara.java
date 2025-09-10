@@ -3,14 +3,14 @@ package net.deadbear34.lumenara;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import net.deadbear34.lumenara.entity.client.NautilusRenderer;
+import net.deadbear34.lumenara.loot.ModLootModifiers;
 import net.deadbear34.lumenara.particle.ModParticles;
 import net.deadbear34.lumenara.particle.TemplateParticles;
 import net.deadbear34.lumenara.particle.options.LumenaraParticleOptions;
 import net.deadbear34.lumenara.particle.system.LumenaraParticles;
-import net.deadbear34.lumenara.registry.ModBlockEntities;
-import net.deadbear34.lumenara.registry.ModBlocks;
-import net.deadbear34.lumenara.registry.ModCreativeModeTabs;
-import net.deadbear34.lumenara.registry.ModItems;
+import net.deadbear34.lumenara.registry.*;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerLevel;
@@ -51,6 +51,8 @@ public class Lumenara {
         ModItems.register(modEventBus);
         ModParticles.register(modEventBus);
         ModBlockEntities.register(modEventBus);
+        ModEntities.register(modEventBus);
+        ModLootModifiers.register(modEventBus);
 
 
         // Register the item to a creative tab
@@ -111,7 +113,7 @@ public class Lumenara {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            EntityRenderers.register(ModEntities.NAUTILUS.get(), NautilusRenderer::new);
         }
         @SubscribeEvent
         public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
