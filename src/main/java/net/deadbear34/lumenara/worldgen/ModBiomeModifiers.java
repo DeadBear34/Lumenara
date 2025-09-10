@@ -43,9 +43,9 @@ public class ModBiomeModifiers {
                 biomes.getOrThrow(BiomeTags.IS_OCEAN),
                 List.of(new MobSpawnSettings.SpawnerData(
                         ModEntities.NAUTILUS.get(),
-                        15, // Bobot (weight): seberapa besar peluang spawn. Makin tinggi, makin sering.
-                        2,  // Jumlah min: jumlah minimum dalam satu grup.
-                        5   // Jumlah max: jumlah maksimum dalam satu grup.
+                        15,
+                        2,
+                        5
                 ))
         ));
 
