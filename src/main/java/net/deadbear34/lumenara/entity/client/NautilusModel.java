@@ -2,6 +2,7 @@ package net.deadbear34.lumenara.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.deadbear34.lumenara.Lumenara;
 import net.deadbear34.lumenara.entity.custom.NautilusEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -12,13 +13,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class NautilusModel<T extends NautilusEntity> extends HierarchicalModel<T> {
-    // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("modid", "nautilus"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION =  new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Lumenara.MOD_ID, "nautilus"), "main");
+
+    private final ModelPart root;
     private final ModelPart shell;
     private final ModelPart head;
     private final ModelPart tentacles;
 
     public NautilusModel(ModelPart root) {
+        this.root = root;
         this.shell = root.getChild("shell");
         this.head = root.getChild("head");
         this.tentacles = this.head.getChild("tentacles");
@@ -42,12 +45,24 @@ public class NautilusModel<T extends NautilusEntity> extends HierarchicalModel<T
     }
 
     @Override
-    public void setupAnim(NautilusEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(NautilusEntity entity, float limbSwing, float limbSwingAmount,
+                          float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.applyHeadRotation(netHeadYaw, headPitch);
 
+        // hanya rotasi kepala kalau tidak sedang hiding
+        if (!entity.isHiding()) {
+            this.applyHeadRotation(netHeadYaw, headPitch);
+        }
+
+        // idle anim
         this.animate(entity.idleAnimationState, NautilusAnimations.ANIM_IDLE_NAUTILUS, ageInTicks, 1f);
+
+        // hiding / un-hiding anim
+        this.animate(entity.hideAnimationState, NautilusAnimations.HIDING_ON_SHELL_NAUTILUS, ageInTicks, 1f);
+        this.animate(entity.unhideAnimationState, NautilusAnimations.UNHIDING_ON_SHELL_NAUTILUS, ageInTicks, 1f);
     }
+
+
 
     private void applyHeadRotation(float headYaw, float headPitch) {
         headYaw = Mth.clamp(headYaw, -30f, 30f);
@@ -59,12 +74,12 @@ public class NautilusModel<T extends NautilusEntity> extends HierarchicalModel<T
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-        shell.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-        head.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        root.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
     }
+
 
     @Override
     public ModelPart root() {
-        return shell;
+        return root;
     }
 }
