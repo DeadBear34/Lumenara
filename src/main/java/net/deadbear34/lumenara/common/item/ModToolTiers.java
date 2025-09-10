@@ -1,9 +1,8 @@
 package net.deadbear34.lumenara.common.item;
 
-import net.deadbear34.lumenara.registry.ModItems;
-import net.deadbear34.lumenara.util.ModTags;
+import net.deadbear34.lumenara.common.registry.ModItems;
+import net.deadbear34.lumenara.common.util.ModTags;
 import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.SimpleTier;
 

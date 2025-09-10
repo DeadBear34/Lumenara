@@ -1,19 +1,12 @@
 package net.deadbear34.lumenara;
 
 
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import net.deadbear34.lumenara.entity.client.NautilusRenderer;
-import net.deadbear34.lumenara.loot.ModLootModifiers;
-import net.deadbear34.lumenara.particle.ModParticles;
-import net.deadbear34.lumenara.particle.TemplateParticles;
-import net.deadbear34.lumenara.particle.options.LumenaraParticleOptions;
-import net.deadbear34.lumenara.particle.system.LumenaraParticles;
-import net.deadbear34.lumenara.registry.*;
+import net.deadbear34.lumenara.common.entity.client.NautilusRenderer;
+import net.deadbear34.lumenara.common.loot.ModLootModifiers;
+import net.deadbear34.lumenara.client.particle.ModParticles;
+import net.deadbear34.lumenara.client.particle.TemplateParticles;
+import net.deadbear34.lumenara.common.registry.*;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
-import net.minecraft.server.level.ServerLevel;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -73,40 +66,7 @@ public class Lumenara {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        CommandDispatcher<CommandSourceStack> dispatcher = event.getServer().getCommands().getDispatcher();
 
-        dispatcher.register(Commands.literal("lumenara")
-                .then(Commands.literal("test")
-                        // Argumen sekarang berupa nama efek (string)
-                        .then(Commands.argument("effect", StringArgumentType.word())
-                                .executes(context -> {
-                                    String effectName = StringArgumentType.getString(context, "effect");
-                                    ServerLevel level = context.getSource().getLevel();
-                                    double x = context.getSource().getPosition().x;
-                                    double y = context.getSource().getPosition().y;
-                                    double z = context.getSource().getPosition().z;
-
-                                    // Pilih preset partikel berdasarkan nama efek
-                                    LumenaraParticleOptions options;
-                                    switch (effectName.toLowerCase()) {
-                                        case "soulfire":
-                                            options = LumenaraParticles.soulFire();
-                                            break;
-                                        case "rocket":
-                                            options = LumenaraParticles.rocketBurst();
-                                            break;
-                                        default:
-                                            // Jika nama tidak dikenali, gunakan partikel putih sederhana
-                                            options = LumenaraParticles.simple(new org.joml.Vector3f(1,1,1), 20);
-                                            break;
-                                    }
-
-                                    level.sendParticles(options, x, y + 1.5, z, 30,   0.03, 0.03, 0.03, 0.0);
-                                    return 1;
-                                })
-                        )
-                )
-        );
     }
 
     @EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
@@ -120,6 +80,15 @@ public class Lumenara {
             event.registerSpriteSet(ModParticles.TEMPLATE_PARTICLES.get(),
                     (spriteSet) -> new TemplateParticles.Provider(spriteSet));
 
+            event.registerSpriteSet(ModParticles.SOUL_FIRE_PARTICLE.get(),
+                    (spriteSet) -> new TemplateParticles.Provider(spriteSet));
+
+            event.registerSpriteSet(ModParticles.ROCKET_BURST_PARTICLE.get(),
+                    (spriteSet) -> new TemplateParticles.Provider(spriteSet));
+
+            event.registerSpriteSet(ModParticles.EXPLOSION_DEBRIS_PARTICLE.get(),
+                    (spriteSet) -> new TemplateParticles.Provider(spriteSet));
         }
+
     }
 }

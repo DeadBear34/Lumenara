@@ -3,8 +3,8 @@ package net.deadbear34.lumenara.common.block;
 import com.mojang.serialization.MapCodec;
 import java.util.function.BiConsumer;
 import net.deadbear34.lumenara.common.block.entity.ExplosiveBarrelBlockEntity;
-import net.deadbear34.lumenara.particle.system.LumenaraParticles;
-import net.deadbear34.lumenara.registry.ModBlockEntities;
+import net.deadbear34.lumenara.client.particle.system.LumenaraParticles;
+import net.deadbear34.lumenara.common.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 public class ExplosiveBarrelBlock extends BaseEntityBlock {
 
@@ -54,25 +55,32 @@ public class ExplosiveBarrelBlock extends BaseEntityBlock {
      */
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
-        // Hanya munculkan partikel jika barrel sedang menyala
         if (pState.getValue(PRIMED)) {
-            // Gunakan for loop untuk memunculkan 3 partikel setiap tick
-            for (int i = 0; i < 3; i++) {
-                // Tentukan titik muncul di tengah atas blok
-                double topX = pPos.getX() + 0.5;
-                double topY = pPos.getY() + 1.05; // Sedikit di atas permukaan blok
-                double topZ = pPos.getZ() + 0.5;
+            // Lidah api (rocketBurst) ke atas
+            for (int i = 0; i < 5; i++) {
+                double topX = pPos.getX() + 0.5 + (pRandom.nextDouble() - 0.5) * 0.1; // Sedikit variasi
+                double topY = pPos.getY() + 1.05;
+                double topZ = pPos.getZ() + 0.5 + (pRandom.nextDouble() - 0.5) * 0.1;
 
-                // Tambahkan sedikit gerakan acak agar terlihat seperti percikan
-                double xSpeed = (pRandom.nextDouble() - 0.5) * 0.1;
-                double ySpeed = pRandom.nextDouble() * 0.2;
-                double zSpeed = (pRandom.nextDouble() - 0.5) * 0.1;
+                // Fokus ke atas, sedikit variasi X/Z
+                double xSpeed = (pRandom.nextDouble() - 0.5) * 0.02;
+                double ySpeed = 0.3 + pRandom.nextDouble() * 0.2; // Selalu naik
+                double zSpeed = (pRandom.nextDouble() - 0.5) * 0.02;
 
-                // Panggil partikel "rocketBurst" kita
                 pLevel.addParticle(LumenaraParticles.rocketBurst(), topX, topY, topZ, xSpeed, ySpeed, zSpeed);
+            }
+
+            // Percikan kecil (kayak sumbu terbakar)
+            if (pRandom.nextFloat() < 0.3f) {
+                double sparkX = pPos.getX() + 0.5;
+                double sparkY = pPos.getY() + 1.0;
+                double sparkZ = pPos.getZ() + 0.5;
+                pLevel.addParticle(LumenaraParticles.simple(new Vector3f(1.0f, 0.9f, 0.5f), 5),
+                        sparkX, sparkY, sparkZ, 0, 0.05, 0);
             }
         }
     }
+
 
     /**
      * Menangani interaksi saat pemain menyalakan barrel dengan Flint and Steel.

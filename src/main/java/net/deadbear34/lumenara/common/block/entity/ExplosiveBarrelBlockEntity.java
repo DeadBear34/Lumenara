@@ -1,7 +1,7 @@
 package net.deadbear34.lumenara.common.block.entity;
 
-import net.deadbear34.lumenara.particle.system.LumenaraParticles;
-import net.deadbear34.lumenara.registry.ModBlockEntities;
+import net.deadbear34.lumenara.client.particle.system.LumenaraParticles;
+import net.deadbear34.lumenara.common.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
