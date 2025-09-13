@@ -4,7 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.deadbear34.lumenara.Lumenara;
 import net.deadbear34.lumenara.common.entity.custom.NautilusEntity;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.animation.KeyframeAnimation;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,19 +13,27 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class NautilusModel<T extends NautilusEntity> extends HierarchicalModel<T> {
+public class NautilusModel extends EntityModel<NautilusRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION =  new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Lumenara.MOD_ID, "nautilus"), "main");
 
-    private final ModelPart root;
     private final ModelPart shell;
     private final ModelPart head;
     private final ModelPart tentacles;
 
+    private final KeyframeAnimation hideAnimation;
+
+    private final KeyframeAnimation unhideAnimation;
+    private final KeyframeAnimation idlingAnimation;
+
     public NautilusModel(ModelPart root) {
-        this.root = root;
+        super(root);
         this.shell = root.getChild("shell");
         this.head = root.getChild("head");
         this.tentacles = this.head.getChild("tentacles");
+
+        this.idlingAnimation = NautilusAnimations.ANIM_IDLE_NAUTILUS.bake(root);
+        this.unhideAnimation = NautilusAnimations.UNHIDING_ON_SHELL_NAUTILUS.bake(root);
+        this.hideAnimation = NautilusAnimations.HIDING_ON_SHELL_NAUTILUS.bake(root);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -45,24 +54,21 @@ public class NautilusModel<T extends NautilusEntity> extends HierarchicalModel<T
     }
 
     @Override
-    public void setupAnim(NautilusEntity entity, float limbSwing, float limbSwingAmount,
-                          float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(NautilusRenderState state) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
 
         // hanya rotasi kepala kalau tidak sedang hiding
-        if (!entity.isHiding()) {
-            this.applyHeadRotation(netHeadYaw, headPitch);
+        if (!state.isHiding) {
+            this.applyHeadRotation(state.netHeadYaw, state.headPitch);
         }
 
         // idle anim
-        this.animate(entity.idleAnimationState, NautilusAnimations.ANIM_IDLE_NAUTILUS, ageInTicks, 1f);
+        idlingAnimation.apply(state.idleAnimationState, state.ageInTicks, 1f);
 
         // hiding / un-hiding anim
-        this.animate(entity.hideAnimationState, NautilusAnimations.HIDING_ON_SHELL_NAUTILUS, ageInTicks, 1f);
-        this.animate(entity.unhideAnimationState, NautilusAnimations.UNHIDING_ON_SHELL_NAUTILUS, ageInTicks, 1f);
+        hideAnimation.apply(state.hideAnimationState, state.ageInTicks, 1f);
+        unhideAnimation.apply(state.unhideAnimationState, state.ageInTicks, 1f);
     }
-
-
 
     private void applyHeadRotation(float headYaw, float headPitch) {
         headYaw = Mth.clamp(headYaw, -30f, 30f);
@@ -72,14 +78,4 @@ public class NautilusModel<T extends NautilusEntity> extends HierarchicalModel<T
         this.head.xRot = headPitch *  ((float)Math.PI / 180f);
     }
 
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-        root.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-    }
-
-
-    @Override
-    public ModelPart root() {
-        return root;
-    }
 }

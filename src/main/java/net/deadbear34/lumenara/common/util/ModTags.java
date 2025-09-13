@@ -22,6 +22,8 @@ public class ModTags {
 
     public static class Items {
 
+        public static final TagKey<Item> ADAMANTIUM_REPAIRABLE = createTag("adamantium_repairable");
+
         private static TagKey<Item> createTag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(Lumenara.MOD_ID, name));
         }

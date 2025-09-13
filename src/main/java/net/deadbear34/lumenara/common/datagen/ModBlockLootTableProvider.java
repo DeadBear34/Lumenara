@@ -1,6 +1,7 @@
 package net.deadbear34.lumenara.common.datagen;
 
 import net.deadbear34.lumenara.common.registry.ModBlocks;
+import net.deadbear34.lumenara.common.registry.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -25,9 +26,25 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
+        // Adamantium block drop itself
+        this.dropSelf(ModBlocks.ADAMANTIUM_BLOCK.get());
 
+        this.dropSelf(ModBlocks.EXPLOSIVE_BARREL.get());
 
+        this.add(ModBlocks.ADAMANTIUM_ORE.get(),
+                block -> createOreDrop(block, ModItems.RAW_ADAMANTIUM.get()));
+
+        this.add(ModBlocks.DEEPSLATE_ADAMANTIUM_ORE.get(),
+                block -> createOreDrop(block, ModItems.RAW_ADAMANTIUM.get()));
+
+        // MiniGrass loot pakai shears
+        this.add(ModBlocks.MINI_GRASS.get(),
+                block -> createShearsDispatchTable(block, LootItem.lootTableItem(block)));
+
+        this.dropSelf(ModBlocks.RED_PETALS.get());
     }
+
+
 
     protected LootTable.Builder createMultipleOreDrops(Block pBlock, Item item, float minDrops, float maxDrops) {
         HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);

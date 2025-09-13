@@ -4,6 +4,7 @@ import net.deadbear34.lumenara.common.entity.ai.goal.NautilusDefensiveGoal;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
@@ -77,14 +78,16 @@ public class NautilusEntity extends WaterAnimal {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        boolean result = super.hurt(source, amount);
-        if (!this.level().isClientSide) {
+    protected void actuallyHurt(ServerLevel level, DamageSource source, float amount) {
+        super.actuallyHurt(level, source, amount);
+
+        if (!level.isClientSide()) {
             this.setThreatened(true);
             this.hideCooldown = 100;
         }
-        return result;
     }
+
+
 
     public void setThreatened(boolean value) {
         if (this.isHiding() != value) {

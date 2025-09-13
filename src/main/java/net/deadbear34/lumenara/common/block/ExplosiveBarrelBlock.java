@@ -6,11 +6,12 @@ import net.deadbear34.lumenara.common.block.entity.ExplosiveBarrelBlockEntity;
 import net.deadbear34.lumenara.client.particle.system.LumenaraParticles;
 import net.deadbear34.lumenara.common.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -26,6 +27,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -86,32 +89,50 @@ public class ExplosiveBarrelBlock extends BaseEntityBlock {
      * Menangani interaksi saat pemain menyalakan barrel dengan Flint and Steel.
      */
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (!pState.getValue(PRIMED) && pStack.is(Items.FLINT_AND_STEEL)) {
-            prime(pLevel, pPos, 80); // Sumbu panjang (4 detik)
-            pStack.hurtAndBreak(1, pPlayer, Player.getSlotForHand(pHand));
-            return ItemInteractionResult.sidedSuccess(pLevel.isClientSide);
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state,
+                                          Level level, BlockPos pos,
+                                          Player player, InteractionHand hand,
+                                          BlockHitResult hit) {
+        if (!state.getValue(PRIMED) && stack.is(Items.FLINT_AND_STEEL)) {
+            prime(level, pos, 80); // Sumbu panjang (4 detik)
+            stack.hurtAndBreak(1, player, Player.getSlotForHand(hand));
+
+            // Gunakan InteractionResult sesuai sisi
+            return level.isClientSide
+                    ? InteractionResult.SUCCESS
+                    : InteractionResult.SUCCESS_SERVER;
         }
-        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHit);
+
+        return super.useItemOn(stack, state, level, pos, player, hand, hit);
     }
+
+
 
     /**
      * Menangani pemicu saat barrel terkena ledakan lain.
      */
+
+
     @Override
-    public void onExplosionHit(BlockState state, Level level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> dropConsumer) {
+    protected void onExplosionHit(BlockState state, ServerLevel level, BlockPos pos,
+                                  Explosion explosion,
+                                  BiConsumer<ItemStack, BlockPos> dropConsumer) {
         if (!state.getValue(PRIMED)) {
             prime(level, pos, 10); // Sumbu pendek (0.5 detik)
         }
     }
 
+
     @Override
-    public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pBlock, BlockPos pFromPos, boolean pIsMoving) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos,
+                                   Block neighborBlock, @Nullable Orientation orientation,
+                                   boolean movedByPiston) {
         // Cek apakah barrel belum menyala dan menerima sinyal redstone yang kuat
-        if (!pState.getValue(PRIMED) && pLevel.hasNeighborSignal(pPos)) {
-            prime(pLevel, pPos, 80); // Nyalakan dengan sumbu normal (4 detik)
+        if (!state.getValue(PRIMED) && level.hasNeighborSignal(pos)) {
+            prime(level, pos, 80); // Nyalakan dengan sumbu normal (4 detik)
         }
     }
+
 
     /**
      * Metode helper untuk menyalakan barrel dengan durasi sumbu tertentu.

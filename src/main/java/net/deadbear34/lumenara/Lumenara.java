@@ -2,14 +2,21 @@ package net.deadbear34.lumenara;
 
 
 import net.deadbear34.lumenara.common.entity.client.NautilusRenderer;
+import net.deadbear34.lumenara.common.event.ModEventBusEvents;
 import net.deadbear34.lumenara.common.loot.ModLootModifiers;
 import net.deadbear34.lumenara.client.particle.ModParticles;
 import net.deadbear34.lumenara.client.particle.TemplateParticles;
 import net.deadbear34.lumenara.common.registry.*;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.level.FoliageColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
@@ -39,6 +46,7 @@ public class Lumenara {
 
         ModCreativeModeTabs.register(modEventBus);
 
+
         //Registries
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
@@ -51,8 +59,6 @@ public class Lumenara {
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
-        // Register our Config class to the event bus
-        modEventBus.register(Config.class);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -74,6 +80,8 @@ public class Lumenara {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.NAUTILUS.get(), NautilusRenderer::new);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.MINI_GRASS.get(), ChunkSectionLayer.CUTOUT);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.RED_PETALS.get(), ChunkSectionLayer.CUTOUT);
         }
         @SubscribeEvent
         public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
@@ -88,6 +96,16 @@ public class Lumenara {
 
             event.registerSpriteSet(ModParticles.EXPLOSION_DEBRIS_PARTICLE.get(),
                     (spriteSet) -> new TemplateParticles.Provider(spriteSet));
+        }
+
+        @SubscribeEvent
+        public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+            event.register((pState, pLevel, pPos, pTintIndex) -> {
+                if (pLevel == null || pPos == null) {
+                    return FoliageColor.FOLIAGE_DEFAULT;
+                }
+                return BiomeColors.getAverageGrassColor(pLevel, pPos);
+            }, ModBlocks.MINI_GRASS.get());
         }
 
     }

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "bottom": "lumenara:block/explosive_barrel_bottom",
-    "side": "lumenara:block/explosive_barrel_side_primed",
-    "top": "lumenara:block/explosive_barrel_top"
-  }
-}

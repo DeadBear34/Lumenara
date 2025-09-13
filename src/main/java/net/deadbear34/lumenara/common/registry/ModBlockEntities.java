@@ -13,12 +13,11 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Lumenara.MOD_ID);
 
-    // --- PENDAFTARAN BARU DI SINI ---
+
     public static final Supplier<BlockEntityType<ExplosiveBarrelBlockEntity>> EXPLOSIVE_BARREL_ENTITY =
             BLOCK_ENTITIES.register("explosive_barrel", () ->
-                    BlockEntityType.Builder.of(ExplosiveBarrelBlockEntity::new,
-                            // Tipe Block Entity ini hanya berlaku untuk blok Explosive Barrel
-                            ModBlocks.EXPLOSIVE_BARREL.get()).build(null));
+                    new BlockEntityType<>(ExplosiveBarrelBlockEntity::new,
+                            ModBlocks.EXPLOSIVE_BARREL.get()));
 
 
     public static void register(IEventBus eventBus) {

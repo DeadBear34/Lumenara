@@ -35,6 +35,12 @@ public class ModCreativeModeTabs {
 
                         output.accept(ModItems.NAUTILUS_SPAWN_EGG);
 
+                        // TAMBAHKAN BLOK BARU ANDA DI SINI
+                        output.accept(ModBlocks.MINI_GRASS);
+                        output.accept(ModBlocks.RED_PETALS);
+
+
+
                     }).build());
 
     public static void register(IEventBus eventBus) {

@@ -3,7 +3,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     // Plugin utama untuk pengembangan mod NeoForge
-    id 'net.neoforged.moddev' version '2.0.105'
+    id 'net.neoforged.moddev' version '2.0.107'
     // Plugin untuk integrasi dengan IntelliJ IDEA
     id 'idea'
 }
@@ -80,7 +80,7 @@ neoForge {
         }
 
         data {
-            data()
+            clientData()
 
             // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
             // gameDirectory = project.file('run-data')
@@ -129,12 +129,12 @@ configurations {
 
 dependencies {
 
-    implementation "maven.modrinth:jade:${project.jade_version}"
+    //implementation "maven.modrinth:jade:${project.jade_version}"
 
     // compile against the JEI API but do not include it at runtime
-    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
+    //compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     // at runtime, use the full JEI jar for NeoForge
-    runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+    //runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime

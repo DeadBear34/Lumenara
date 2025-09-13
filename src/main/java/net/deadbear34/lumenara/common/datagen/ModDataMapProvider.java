@@ -11,4 +11,9 @@ public class ModDataMapProvider extends DataMapProvider {
         super(packOutput, lookupProvider);
     }
 
+    @Override
+    protected void gather(HolderLookup.Provider provider) {
+
+    }
+
 }

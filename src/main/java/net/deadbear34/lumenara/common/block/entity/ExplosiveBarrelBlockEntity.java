@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class ExplosiveBarrelBlockEntity extends BlockEntity {
     private static final int DEFAULT_FUSE_TICKS = 80; // 4 detik
@@ -51,14 +53,16 @@ public class ExplosiveBarrelBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
-        pTag.putInt("Fuse", this.fuseTicks);
+    protected void loadAdditional(ValueInput input) {
+        this.fuseTicks = input.getIntOr("Fuse", -1);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
-        this.fuseTicks = pTag.getInt("Fuse");
+    protected void saveAdditional(ValueOutput output) {
+        if (this.fuseTicks >= 0) {
+            output.putInt("Fuse", this.fuseTicks);
+        }
     }
+
+
 }
